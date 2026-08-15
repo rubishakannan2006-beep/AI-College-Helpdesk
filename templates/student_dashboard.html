@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2>Student Dashboard</h2>
+  <a class="btn btn-primary" href="/student/chat">Open Chatbot</a>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card p-3">
+      <h5>Recent Notices</h5>
+      <p>No notices yet.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h5>Quick Actions</h5>
+      <ul>
+        <li><a href="/student/chat">Ask Question</a></li>
+        <li><a href="/student/history">Chat History</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

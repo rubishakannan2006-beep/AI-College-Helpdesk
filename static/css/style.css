@@ -1,0 +1,6 @@
+body{background:#f8f9fa}
+.chat-card{max-width:900px;margin:0 auto}
+#messages .badge{border-radius:12px;padding:10px}
+#messages .d-flex{justify-content:flex-start}
+#messages .d-flex .badge{max-width:80%}
+#messages .d-flex:nth-child(odd){justify-content:flex-end}

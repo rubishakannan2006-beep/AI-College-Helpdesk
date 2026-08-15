@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+{% block content %}
+<h3>Admin Dashboard</h3>
+<div class="row">
+  <div class="col-md-3"><div class="card p-3">Total Students<br><b>{{ total_students }}</b></div></div>
+  <div class="col-md-3"><div class="card p-3">Total FAQs<br><b>{{ total_faqs }}</b></div></div>
+  <div class="col-md-3"><div class="card p-3">Unanswered<br><b>{{ unanswered }}</b></div></div>
+</div>
+<hr>
+<a href="/admin/faqs" class="btn btn-primary">Manage FAQs</a>
+<a href="/admin/unanswered" class="btn btn-secondary">Unanswered Questions</a>
+{% endblock %}

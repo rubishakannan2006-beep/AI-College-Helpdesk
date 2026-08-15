@@ -1,0 +1,22 @@
+{% extends '../base.html' %}
+{% block content %}
+<h3>FAQs</h3>
+<a class="btn btn-success mb-2" href="#add">Add FAQ</a>
+<table class="table">
+  <thead><tr><th>ID</th><th>Question</th><th>Category</th></tr></thead>
+  <tbody>
+    {% for f in faqs %}
+      <tr><td>{{f.id}}</td><td>{{f.question}}</td><td>{{f.category}}</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+<hr>
+<h5 id="add">Add FAQ</h5>
+<form method="post" action="/admin/api/faqs">
+  <div class="mb-2"><input class="form-control" name="question" placeholder="Question"></div>
+  <div class="mb-2"><input class="form-control" name="answer" placeholder="Answer"></div>
+  <div class="mb-2"><input class="form-control" name="category" placeholder="Category"></div>
+  <div class="mb-2"><input class="form-control" name="keywords" placeholder="Keywords"></div>
+  <button class="btn btn-primary">Add</button>
+</form>
+{% endblock %}

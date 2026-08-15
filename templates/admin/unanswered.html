@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+{% block content %}
+<h3>Unanswered Questions</h3>
+<table class="table">
+  <thead><tr><th>ID</th><th>Question</th><th>Created</th></tr></thead>
+  <tbody>
+  {% for it in items %}
+    <tr><td>{{ it.id }}</td><td>{{ it.question }}</td><td>{{ it.created_at }}</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
