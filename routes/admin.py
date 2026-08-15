@@ -1,7 +1,4 @@
 from flask import Blueprint, render_template, session, redirect, url_for, request, flash, jsonify
-from models.user import User
-from models.faq import FAQ
-from models.chat import UnansweredQuestion
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -24,6 +21,9 @@ def admin_login():
 @admin_bp.route('/dashboard')
 @admin_required
 def dashboard():
+    from models.user import User
+    from models.faq import FAQ
+    from models.chat import UnansweredQuestion
     total_students = User.query.filter_by(role='STUDENT').count()
     total_faqs = FAQ.query.count()
     total_questions = 0
@@ -34,6 +34,7 @@ def dashboard():
 @admin_bp.route('/faqs')
 @admin_required
 def faqs():
+    from models.faq import FAQ
     q = request.args.get('q')
     if q:
         faqs = FAQ.query.filter(FAQ.question.ilike(f'%{q}%') | FAQ.answer.ilike(f'%{q}%')).all()
@@ -45,6 +46,7 @@ def faqs():
 @admin_bp.route('/unanswered')
 @admin_required
 def unanswered():
+    from models.chat import UnansweredQuestion
     items = UnansweredQuestion.query.filter_by(status='pending').all()
     return render_template('admin/unanswered.html', items=items)
 
@@ -52,7 +54,8 @@ def unanswered():
 @admin_bp.route('/api/faqs', methods=['POST'])
 @admin_required
 def api_add_faq():
-    from app import db
+    from extensions import db
+    from models.faq import FAQ
     data = request.form
     faq = FAQ(question=data.get('question'), answer=data.get('answer'), category=data.get('category'), keywords=data.get('keywords'))
     db.session.add(faq)

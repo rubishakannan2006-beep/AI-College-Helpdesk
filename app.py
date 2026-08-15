@@ -1,9 +1,15 @@
+import sys
 from flask import Flask, flash
-from flask_sqlalchemy import SQLAlchemy
+
+# When running `python app.py` the module's __name__ is '__main__', but
+# other modules import this file as 'app'. Ensure both names point to the
+# same module object so extensions (like SQLAlchemy) are not created twice.
+if __name__ == '__main__':
+    sys.modules.setdefault('app', sys.modules['__main__'])
 from flask_migrate import Migrate
 from config import Config
 
-db = SQLAlchemy()
+from extensions import db
 
 def create_app():
     app = Flask(__name__)

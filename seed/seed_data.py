@@ -18,6 +18,7 @@ from models.contact import Contact
 
 def seed():
     app = create_app()
+    from extensions import db
     with app.app_context():
         db.create_all()
         # Default admin

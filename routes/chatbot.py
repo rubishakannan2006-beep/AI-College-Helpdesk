@@ -1,6 +1,4 @@
 from flask import Blueprint, request, jsonify, current_app, session, render_template
-from models.faq import FAQ
-from models.chat import ChatHistory, UnansweredQuestion
 from services.chatbot_engine import ChatbotEngine
 
 chatbot_bp = Blueprint('chatbot', __name__)
@@ -25,9 +23,13 @@ def api_chat():
     user_id = session.get('user_id')
     if not question:
         return jsonify({'error': 'Empty question'}), 400
+    global engine
+    if engine is None:
+        init_engine()
     result = engine.answer(question)
     # Save chat
-    from app import db
+    from models.chat import ChatHistory, UnansweredQuestion
+    from extensions import db
     chat = ChatHistory(user_id=user_id, question=question, answer=result.get('answer'), category=result.get('category'), confidence=result.get('confidence'))
     db.session.add(chat)
     # If low confidence, store unanswered
@@ -40,6 +42,7 @@ def api_chat():
 
 @chatbot_bp.route('/api/faqs', methods=['GET'])
 def api_faqs():
+    from models.faq import FAQ
     faqs = FAQ.query.all()
     data = [{'id': f.id, 'question': f.question, 'answer': f.answer, 'category': f.category} for f in faqs]
     return jsonify(data)

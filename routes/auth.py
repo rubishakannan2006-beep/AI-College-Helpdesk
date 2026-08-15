@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from models.user import User
 
 auth_bp = Blueprint('auth', __name__)
 
@@ -12,7 +11,8 @@ def index():
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        from app import db
+        from extensions import db
+        from models.user import User
         name = request.form.get('name')
         email = request.form.get('email')
         password = request.form.get('password')
@@ -33,6 +33,7 @@ def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
+        from models.user import User
         user = User.query.filter_by(email=email).first()
         if not user or not user.check_password(password):
             flash('Invalid credentials', 'danger')
